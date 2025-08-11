@@ -8,7 +8,7 @@ import { createUser } from "../controller/create-user.controller";
 const userRouter = express.Router();
 
 userRouter.post("/create-user", createUser);
-userRouter.get("/get-users", getUsers);
+userRouter.get("/", getUsers);
 userRouter.put("/update-user/:id", UpdateUser);
 userRouter.post("/sign-in", SignIn);
 

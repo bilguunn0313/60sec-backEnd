@@ -12,6 +12,7 @@ model User {
   email String  @unique
   username  String @unique
   password String
+  role Role @default(BASIC)
   profile Profile?
   profileId Int?
   subscriptions Subscription[]
@@ -61,4 +62,9 @@ enum SubscriptionStatus {
   CANCELED
   EXPIRED
   PAST_DUE
+}
+
+enum Role {
+  BASIC
+  ADMIN
 }
