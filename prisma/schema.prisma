@@ -1,8 +1,64 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DB_URL")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  username  String @unique
+  password String
+  profile Profile?
+  profileId Int?
+  subscriptions Subscription[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  name String
+  about String?
+  avatarImage String?
+  userId Int @unique
+  user User @relation( fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id            Int              @id @default(autoincrement())
+  user          User             @relation(fields: [userId], references: [id])
+  userId        Int
+  plan          Plan             @relation(fields: [planId], references: [id])
+  planId        Int
+  startDate     DateTime         @default(now())
+  endDate       DateTime?
+  status        SubscriptionStatus @default(ACTIVE)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Plan {
+  id            Int             @id @default(autoincrement())
+  name          String
+  price         Decimal         @db.Decimal(10,2)
+  interval      PlanInterval    
+  subscriptions Subscription[]
+}
+
+enum PlanInterval {
+  MONTHLY
+  YEARLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  EXPIRED
+  PAST_DUE
 }
