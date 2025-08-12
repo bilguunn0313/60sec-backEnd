@@ -10,8 +10,8 @@ generator client {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  username  String @unique
-  password String
+  username String? @unique @db.VarChar(255)
+  password String?
   role Role @default(BASIC)
   profile Profile?
   profileId Int?
