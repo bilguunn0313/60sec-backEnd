@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { userId } = req.params;

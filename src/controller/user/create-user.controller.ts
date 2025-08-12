@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 export const createUser = async (req: Request, res: Response) => {
   const { email, password, username } = req.body;
