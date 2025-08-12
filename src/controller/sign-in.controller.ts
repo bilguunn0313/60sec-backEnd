@@ -1,40 +1,34 @@
-import { Response, Request } from "express";
-
+import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import "dotenv/config";
 import { prisma } from "../utils/prisma";
 
-// export const secret = "Super-Duper-Secret-Zayu";
-export const SignIn = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+export const signIn = async (req: Request, res: Response) => {
+  const { password, email } = req.body;
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
 
-    if (!user || !user.password || !password) {
-      res.status(400).json({ message: "try again" });
-      return;
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (isMatch) {
-      const data = {
-        userId: user?.id,
-        email: user?.email,
-        username: user?.username,
-      };
-      const secret = process.env.SECRET!;
-
-      const sixHour = Math.floor(Date.now() / 1000) * 6 * 60 * 60;
-
-      const accesstoken = jwt.sign({ exp: sixHour, data }, secret);
-      res.status(200).json({ accesstoken });
-    } else {
-      res.status(400).json({ message: "Email and password invalid" });
+    const isPasswordValid = await bcrypt.compare(password, user.password ?? "");
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Incorrect password" });
     }
+
+    const accesstoken = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.SECRET as string,
+      { expiresIn: "1h" }
+    );
+
+    return res.status(200).json({ accesstoken, user });
   } catch (error) {
-    res.status(500).send({ success: false, error });
+    console.error("Sign-in error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

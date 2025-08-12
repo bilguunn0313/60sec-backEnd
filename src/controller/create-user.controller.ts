@@ -1,50 +1,50 @@
-import { Response, Request } from "express";
-
+import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import "dotenv/config";
 import { prisma } from "../utils/prisma";
 
 export const createUser = async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
+  const { email, password, username } = req.body;
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(req.body);
 
   try {
-    const existingUser = await prisma.user.findUnique({
+    const checkUserName = await prisma.user.findUnique({
       where: {
-        email,
+        username,
       },
     });
 
-    if (existingUser) {
-      res.status(400).json({ message: "User profile already created" });
+    if (checkUserName) {
+      res.status(500).json({ message: "Username has been taken" });
       return;
     }
 
     const user = await prisma.user.create({
       data: {
-        username,
         email,
         password: hashedPassword,
+        username,
       },
     });
 
-    const data = {
-      userId: user?.id,
-      email: user?.email,
-      username: user?.username,
-    };
+    const isMatch = bcrypt.compare(password, user.password ?? "");
 
-    const secret = process.env.SECRET!;
-    const sixHour = Math.floor(Date.now() / 1000) * 6 * 60 * 60;
+    if (await isMatch) {
+      const data = { userId: user.id, email: user.email };
 
-    const signUpUserAccessToken = jwt.sign({ exp: sixHour, data }, secret);
+      const secret = process.env.SECRET!;
 
-    res.status(200).json({ signUpUserAccessToken });
+      const hour = Math.floor(Date.now() / 1000) + 60 * 60;
+
+      const accessToken = jwt.sign({ exp: hour, data }, secret as string);
+
+      return res.status(200).json({ success: true, accessToken });
+    } else {
+      return res.status(400).json({ message: "Password mismatch" });
+    }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error });
+    console.log(error);
   }
 };
