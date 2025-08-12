@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
+
+import path from "path";
+
 import speech, { protos } from "@google-cloud/speech";
 import fs from "fs";
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(
+  "./secrets/google-credential.json"
+);
+
 export const transcribeAudio = async (req: Request, res: Response) => {
-  const client = new speech.SpeechClient({
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-  });
+  const client = new speech.SpeechClient();
   const { audioFilePath } = req.body;
 
   if (!audioFilePath) {
@@ -23,8 +28,8 @@ export const transcribeAudio = async (req: Request, res: Response) => {
     const config: protos.google.cloud.speech.v1.IRecognitionConfig = {
       encoding:
         protos.google.cloud.speech.v1.RecognitionConfig.AudioEncoding.LINEAR16,
-      sampleRateHertz: 44100,
-      languageCode: "en-EN",
+      sampleRateHertz: 16000,
+      languageCode: "en-US",
     };
 
     const request: protos.google.cloud.speech.v1.IRecognizeRequest = {
@@ -56,27 +61,25 @@ export const transcribeAudio = async (req: Request, res: Response) => {
   }
 };
 
-// Example usage for testing (simulate Express req/res)
+// const testTranscribe = async () => {
+//   const mockReq = {
+//     body: { audioFilePath: "voip.wav" },
+//   } as Request;
 
-const testTranscribe = async () => {
-  // Mock request and response objects
-  const mockReq = {
-    body: { audioFilePath: "voip.wav" },
-  } as Request;
+//   const mockRes = {
+//     status: function (code: number) {
+//       (this as any).statusCode = code;
+//       return this;
+//     },
+//     json: function (data: any) {
+//       console.log("Response:", data);
+//       return data;
+//     },
+//     statusCode: 200,
+//   } as unknown as Response;
 
-  const mockRes = {
-    status: function (code: number) {
-      (this as any).statusCode = code;
-      return this;
-    },
-    json: function (data: any) {
-      console.log("Response:", data);
-      return data;
-    },
-    statusCode: 200,
-  } as unknown as Response;
+//   await transcribeAudio(mockReq, mockRes);
+//   console.log()
+// };
 
-  await transcribeAudio(mockReq, mockRes);
-};
-
-testTranscribe();
+// testTranscribe();
