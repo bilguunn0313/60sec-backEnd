@@ -1,9 +1,9 @@
 import express from "express";
 
-import { getUsers } from "../controller/get-users.controller";
-import { UpdateUser } from "../controller/update-user.controller";
-import { createUser } from "../controller/create-user.controller";
-import { signIn } from "../controller/sign-in.controller";
+import { getUsers } from "../controller/user/get-users.controller";
+import { signIn } from "../controller/user/sign-in.controller";
+import { createUser } from "../controller/user/create-user.controller";
+import { UpdateUser } from "../controller/user/update-user.controller";
 
 const userRouter = express.Router();
 

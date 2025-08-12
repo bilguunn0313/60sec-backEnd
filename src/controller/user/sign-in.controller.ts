@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 export const signIn = async (req: Request, res: Response) => {
   const { password, email } = req.body;
