@@ -3,7 +3,7 @@ import { Response, Request } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // export const secret = "Super-Duper-Secret-Zayu";
 export const SignIn = async (req: Request, res: Response) => {

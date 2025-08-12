@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 
 import bcrypt from "bcrypt";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 export const UpdateUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;

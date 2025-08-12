@@ -3,7 +3,7 @@ import { Response, Request } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 export const createUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
