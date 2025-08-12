@@ -4,6 +4,7 @@ import userRouter from "./router/user.router";
 import geminiRouter from "./router/gemini.router";
 import speechRouter from "./router/speech.router";
 import dotenv from "dotenv";
+import SubscriptionRouter from "./router/subscription.router";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use("/users", userRouter);
 app.use("/gemini", geminiRouter);
 app.use("/speech", speechRouter);
+app.use("/subscription",SubscriptionRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
