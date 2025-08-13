@@ -1,6 +1,5 @@
 import express from "express";
-
-import { transcribeAudio } from "../controller/Google Speech/audio.controller";
+import { transcribeAudio } from "../controller/google/audio.controller";
 
 const speechRouter = express.Router();
 
