@@ -61,6 +61,8 @@ enum PlanInterval {
 enum SubscriptionStatus {
   ACTIVE
   CANCELED
+  EXPIRED
+  PAST_DUE
 }
 
 enum Role {

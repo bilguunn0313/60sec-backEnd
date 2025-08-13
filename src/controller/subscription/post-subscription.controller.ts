@@ -3,6 +3,26 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+function calculateEndDate(startDate: Date, interval: string): Date {
+  const endDate = new Date(startDate);
+
+  switch (interval) {
+    case "MONTHLY":
+      endDate.setMonth(endDate.getMonth() + 1);
+      break;
+    case "THREE_MONTHS":
+      endDate.setMonth(endDate.getMonth() + 3);
+      break;
+    case "YEARLY":
+      endDate.setFullYear(endDate.getFullYear() + 1);
+      break;
+    default:
+      throw new Error("Unknown plan interval");
+  }
+
+  return endDate;
+}
+
 export const createSubscription = async (req: Request, res: Response) => {
   let { userId, planId } = req.body;
 
@@ -11,7 +31,7 @@ export const createSubscription = async (req: Request, res: Response) => {
     planId = Number(planId);
 
     if (isNaN(userId) || isNaN(planId)) {
-      return res.status(400).json({ message: "userId planId is number" });
+      return res.status(400).json({ message: "userId and planId must be numbers" });
     }
 
     const activeSub = await prisma.subscription.findFirst({
@@ -22,12 +42,24 @@ export const createSubscription = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "User already has an active subscription" });
     }
 
+    const plan = await prisma.plan.findUnique({
+      where: { id: planId },
+    });
+
+    if (!plan) {
+      return res.status(404).json({ message: "Plan not found" });
+    }
+
+    const startDate = new Date();
+    const endDate = calculateEndDate(startDate, plan.interval);
+
     const subscription = await prisma.subscription.create({
       data: {
         userId,
         planId,
         status: "ACTIVE",
-        startDate: new Date(),
+        startDate,
+        endDate,
       },
       include: { plan: true },
     });
