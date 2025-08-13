@@ -39,7 +39,7 @@ model Subscription {
   planId        Int
   startDate     DateTime         @default(now())
   endDate       DateTime?
-  status        SubscriptionStatus @default(ACTIVE)
+  status        SubscriptionStatus
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
 }
@@ -54,14 +54,13 @@ model Plan {
 
 enum PlanInterval {
   MONTHLY
+  THREE_MONTHS
   YEARLY
 }
 
 enum SubscriptionStatus {
   ACTIVE
   CANCELED
-  EXPIRED
-  PAST_DUE
 }
 
 enum Role {

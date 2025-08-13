@@ -1,11 +1,19 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 export const createSubscription = async (req: Request, res: Response) => {
-  const { userId, planId } = req.body;
+  let { userId, planId } = req.body;
 
   try {
+    userId = Number(userId);
+    planId = Number(planId);
+
+    if (isNaN(userId) || isNaN(planId)) {
+      return res.status(400).json({ message: "userId planId is number" });
+    }
+
     const activeSub = await prisma.subscription.findFirst({
       where: { userId, status: "ACTIVE" },
     });
@@ -24,9 +32,9 @@ export const createSubscription = async (req: Request, res: Response) => {
       include: { plan: true },
     });
 
-    res.status(201).json(subscription);
+    return res.status(201).json(subscription);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Subscription creation failed" });
+    console.error("Subscription creation error:", error);
+    return res.status(500).json({ message: "Subscription creation failed" });
   }
 };
