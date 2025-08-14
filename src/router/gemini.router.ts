@@ -1,7 +1,7 @@
 import express from "express";
 
-import { getWords } from "../controller/Gemini/get-generate-word.controller";
-import { checkWords } from "../controller/Gemini/post-check-word.controller";
+import { getWords } from "../controller/gemini/get-generate-word.controller";
+import { checkWords } from "../controller/gemini/post-check-word.controller";
 
 const geminiRouter = express.Router();
 
