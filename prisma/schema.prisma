@@ -8,59 +8,69 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  username  String @unique
-  password String
-  role Role @default(BASIC)
-  profile Profile?
-  profileId Int?
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  username      String         @unique
+  password      String
+  role          Role           @default(BASIC)
+  profile       Profile?
+  profileId     Int?
   subscriptions Subscription[]
-  activities Activity[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Profile {
-  id Int @id @default(autoincrement())
-  name String
-  about String?
+  id          Int      @id @default(autoincrement())
+  name        String
+  about       String?
   avatarImage String?
+
   userId Int @unique
   user User @relation( fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
+
 }
 
 model Subscription {
-  id            Int              @id @default(autoincrement())
-  user          User             @relation(fields: [userId], references: [id])
-  userId        Int
-  plan          Plan             @relation(fields: [planId], references: [id])
-  planId        Int
-  startDate     DateTime         @default(now())
-  endDate       DateTime?
-  status        SubscriptionStatus
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
+  id        Int                @id @default(autoincrement())
+  user      User               @relation(fields: [userId], references: [id])
+  userId    Int
+  plan      Plan               @relation(fields: [planId], references: [id])
+  planId    Int
+  startDate DateTime           @default(now())
+  endDate   DateTime?
+  status    SubscriptionStatus
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
 }
 
 model Plan {
-  id            Int             @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   name          String
-  price         Decimal         @db.Decimal(10,2)
-  interval      PlanInterval    
+  price         Decimal        @db.Decimal(10, 2)
+  interval      PlanInterval
   subscriptions Subscription[]
 }
 
-model Activity {
-  id Int @id @default (autoincrement())
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  duration Int
-  gameType GameType
-  createdAt DateTime @default(now())
+model Reading {
+  id        Int      @id @default(autoincrement())
+  sentences String
+  startTime DateTime
+  endTIme   DateTime
+  userId    Int
+  accuracy  String
+}
+
+model Exercise {
+  id            Int      @id @default(autoincrement())
+  words         String[]
+  startTime     DateTime
+  endTIme       DateTime
+  userId        Int
+  correctAnswer String
 }
 
 enum GameType {
