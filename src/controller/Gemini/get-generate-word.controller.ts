@@ -5,7 +5,7 @@ import { prisma } from "../../utils/prisma";
 export const getWords = async (req: Request, res: Response) => {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   let sentence = "";
-  const { profileId } = req.body;
+  const { profileId } = req.params;
 
   try {
     const model = await genAI.getGenerativeModel({
@@ -27,12 +27,16 @@ export const getWords = async (req: Request, res: Response) => {
         sentences: sentence,
         accuracy: "",
         profile: {
-          connect: { id: profileId },
+          connect: { id: Number(profileId) },
         },
       },
     });
 
-    res.json({ sentence, readingId: reading.id });
+    res.json({
+      sentence,
+      readingId: reading.id,
+      startTime: reading.startTime,
+    });
   } catch (err) {
     console.error("AI генераци алдаа:", err);
     res.status(500).json({ message: "Өгүүлбэр үүсгэхэд алдаа гарлаа." });

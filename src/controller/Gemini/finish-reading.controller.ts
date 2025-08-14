@@ -3,10 +3,11 @@ import { prisma } from "../../utils/prisma";
 
 export const finishReading = async (req: Request, res: Response) => {
   try {
-    const { readingId, accuracy } = req.body;
+    const { accuracy } = req.body;
+    const { readingId } = req.params;
 
     const updated = await prisma.reading.update({
-      where: { id: readingId },
+      where: { id: Number(readingId) },
       data: {
         endTime: new Date(),
         accuracy,
