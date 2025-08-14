@@ -12,7 +12,7 @@ model User {
   email         String         @unique
   username      String         @unique
   password      String
-  role          Role           @default(BASIC)
+  role          Role           @default(USER)
   profile       Profile?
   profileId     Int?
   subscriptions Subscription[]
@@ -25,13 +25,12 @@ model Profile {
   name        String
   about       String?
   avatarImage String?
-
   userId Int @unique
   user User @relation( fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-
+  readings Reading[]
+  exercises Exercise[]
 }
 
 model Subscription {
@@ -58,9 +57,10 @@ model Plan {
 model Reading {
   id        Int      @id @default(autoincrement())
   sentences String
-  startTime DateTime
-  endTIme   DateTime
-  userId    Int
+  startTime DateTime @default(now())
+  endTime   DateTime?
+  profileId    Int
+  profile Profile @relation(fields: [profileId], references: [id])
   accuracy  String
 }
 
@@ -68,15 +68,12 @@ model Exercise {
   id            Int      @id @default(autoincrement())
   words         String[]
   startTime     DateTime
-  endTIme       DateTime
-  userId        Int
+  endTIme       DateTime?
+  profileId        Int
+  profile Profile @relation(fields: [profileId], references: [id])
   correctAnswer String
 }
 
-enum GameType {
-  READING
-  FIND_ERROR
-}
 
 enum PlanInterval {
   MONTHLY
@@ -92,6 +89,6 @@ enum SubscriptionStatus {
 }
 
 enum Role {
-  BASIC
+  USER
   ADMIN
 }
