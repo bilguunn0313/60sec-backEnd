@@ -32,7 +32,7 @@ export const getWords = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({ reading });
+    res.json({ sentence, readingId: reading.id });
   } catch (err) {
     console.error("AI генераци алдаа:", err);
     res.status(500).json({ message: "Өгүүлбэр үүсгэхэд алдаа гарлаа." });

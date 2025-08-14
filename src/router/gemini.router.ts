@@ -7,7 +7,7 @@ import { finishReading } from "../controller/gemini/finish-reading.controller";
 const geminiRouter = express.Router();
 
 geminiRouter.post("/", getWords);
-geminiRouter.put("/finish", finishReading);
+geminiRouter.post("/finish", finishReading);
 geminiRouter.post("/check-words", checkWords);
 
 export default geminiRouter;
