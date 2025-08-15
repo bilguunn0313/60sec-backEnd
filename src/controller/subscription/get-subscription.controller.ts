@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { prisma } from "../../utils/prisma";
 
 export const getUserSubscriptions = async (req: Request, res: Response) => {
-  const profileId = Number(req.params.profileId);
+  const userId = Number(req.params.userId);
 
   try {
     const subscriptions = await prisma.subscription.findMany({
-      where: { profileId },
+      where: { userId },
       include: { plan: true },
       orderBy: { createdAt: "desc" },
     });
