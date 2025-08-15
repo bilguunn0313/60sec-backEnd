@@ -6,7 +6,7 @@ import { getAllSubscriptions } from "../controller/Subscription/getAll-subscript
 
 const SubscriptionRouter = express.Router();
 
-SubscriptionRouter.post("/", createSubscription);
+SubscriptionRouter.post("/create", createSubscription);
 
 SubscriptionRouter.get("/user/:userId", getUserSubscriptions);
 
