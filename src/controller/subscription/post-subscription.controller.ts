@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { prisma } from "../../utils/prisma";
-
-
 function calculateEndDate(startDate: Date, interval: string): Date {
   const endDate = new Date(startDate);
 
