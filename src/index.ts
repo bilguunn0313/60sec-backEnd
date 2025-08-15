@@ -9,7 +9,7 @@ import speechRouter from "./router/speech.router";
 import dotenv from "dotenv";
 import SubscriptionRouter from "./router/subscription.router";
 import PlanRouter from "./router/plan.router";
-
+import { startExpireCron } from "./corn/expireSubscriptions";
 dotenv.config();
 
 const app = express();
@@ -28,7 +28,7 @@ app.use("/profile", profileRouter);
 app.use("/speech", speechRouter);
 app.use("/subscriptions", SubscriptionRouter);
 app.use("/plan", PlanRouter);
-
+startExpireCron();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

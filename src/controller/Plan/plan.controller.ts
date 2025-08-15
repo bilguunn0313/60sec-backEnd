@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // Plan interval enum type
-type PlanInterval = "MONTHLY" | "THREE_MONTHS" | "YEARLY";
+type PlanInterval = |"MONTHLY" | "THREE_MONTHS" | "YEARLY" | "FREE";
 
 export const createPlan = async (req: Request, res: Response) => {
   try {
@@ -19,7 +19,7 @@ export const createPlan = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Price is required and must be a number" });
     }
 
-    const validIntervals: PlanInterval[] = ["MONTHLY", "THREE_MONTHS", "YEARLY"];
+    const validIntervals: PlanInterval[] = ["MONTHLY", "THREE_MONTHS", "YEARLY","FREE"];
     if (!interval || !validIntervals.includes(interval)) {
       return res.status(400).json({ message: "Invalid interval value" });
     }

@@ -1,9 +1,14 @@
 import { Request, Response } from "express";
 import { prisma } from "../../utils/prisma";
+
+// Хугацаа тооцох функц
 function calculateEndDate(startDate: Date, interval: string): Date {
   const endDate = new Date(startDate);
 
   switch (interval) {
+    case "FREE":
+      endDate.setHours(endDate.getHours() + 168);
+      break;
     case "MONTHLY":
       endDate.setMonth(endDate.getMonth() + 1);
       break;
@@ -31,6 +36,7 @@ export const createSubscription = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "userId and planId must be numbers" });
     }
 
+    // Хэрэглэгчийн идэвхтэй subscription шалгах
     const activeSub = await prisma.subscription.findFirst({
       where: { userId, status: "ACTIVE" },
     });

@@ -49,7 +49,7 @@ model Subscription {
 model Plan {
   id            Int            @id @default(autoincrement())
   name          String
-  price         Decimal        @db.Decimal(10, 2)
+  price         Decimal     @db.Decimal(10, 2)
   interval      PlanInterval
   subscriptions Subscription[]
 }
@@ -76,6 +76,7 @@ model Exercise {
 
 
 enum PlanInterval {
+  FREE
   MONTHLY
   THREE_MONTHS
   YEARLY
