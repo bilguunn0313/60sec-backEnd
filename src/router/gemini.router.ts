@@ -9,6 +9,6 @@ const geminiRouter = express.Router();
 geminiRouter.post("/:profileId", getWords);
 geminiRouter.put("/finish/:readingId", finishReading);
 geminiRouter.post("/check-words", checkWords);
-geminiRouter.get("/count/:profileId", getReadingCount);
+geminiRouter.get("/stats/:profileId", getReadingCount);
 
 export default geminiRouter;

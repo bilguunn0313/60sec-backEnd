@@ -20,7 +20,11 @@ export const getReadingCount = async (req: Request, res: Response) => {
       },
     });
 
+    console.log("totalDurationMs");
+
     const totalDurationMs = readings.reduce((sum, reading) => {
+      console.log("=====>", reading.startTime, reading.endTime);
+
       if (reading.startTime && reading.endTime) {
         return (
           sum +
@@ -33,10 +37,10 @@ export const getReadingCount = async (req: Request, res: Response) => {
 
     const totalDurationMinutes = totalDurationMs / 1000 / 60;
 
-    const averageAccuracy = readings.reduce(
-      (acc, curr) => acc + Number(curr.accuracy),
-      0
-    );
+    const averageAccuracy = (
+      readings.reduce((acc, curr) => acc + Number(curr.accuracy), 0) /
+      readings.length
+    ).toFixed(2);
 
     res.json({
       count: readings?.length,
