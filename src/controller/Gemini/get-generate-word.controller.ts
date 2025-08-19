@@ -35,7 +35,6 @@ export const getWords = async (req: Request, res: Response) => {
     res.json({
       sentence,
       readingId: reading.id,
-      startTime: reading.startTime,
     });
   } catch (err) {
     console.error("AI генераци алдаа:", err);
