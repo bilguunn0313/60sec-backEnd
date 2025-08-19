@@ -57,7 +57,7 @@ model Plan {
 model Reading {
   id        Int       @id @default(autoincrement())
   sentences String
-  startTime DateTime?
+  startTime DateTime  @default(now())
   endTime   DateTime?
   profileId Int
   profile   Profile   @relation(fields: [profileId], references: [id])
