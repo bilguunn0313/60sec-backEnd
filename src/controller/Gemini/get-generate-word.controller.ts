@@ -29,7 +29,6 @@ export const getWords = async (req: Request, res: Response) => {
         profile: {
           connect: { id: Number(profileId) },
         },
-        startTime: new Date(),
       },
     });
 

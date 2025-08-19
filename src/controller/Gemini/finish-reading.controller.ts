@@ -9,7 +9,6 @@ export const finishReading = async (req: Request, res: Response) => {
     const updated = await prisma.reading.update({
       where: { id: Number(readingId) },
       data: {
-        endTime: new Date(),
         accuracy,
       },
     });
