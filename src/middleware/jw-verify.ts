@@ -1,11 +1,10 @@
-import { JwtPayload, verify } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-import "dotenv/config";
+import { verify } from "jsonwebtoken";
 
 type DecodedUser = {
-  userId: number;
+  id: string;
   email: string;
-  username: string;
+  role: string;
 };
 
 export type GetUserAuthInfoRequest = Request & {
@@ -18,7 +17,10 @@ export const authenticateToken = (
   next: NextFunction
 ) => {
   const authHeader = req.headers["authorization"] as string;
+
   const token = authHeader && authHeader.split(" ")[1];
+
+  console.log(token);
 
   if (token == null) {
     res.sendStatus(401);
@@ -26,15 +28,15 @@ export const authenticateToken = (
   }
 
   try {
-    const secret = process.env.SECRET!;
-    const decoded = verify(token, secret) as JwtPayload;
+    const decoded = verify(
+      token,
+      process.env.SECRET!
+    ) as DecodedUser;
 
-    console.log("decoded decoded:::", decoded.data);
-
-    req.user = decoded.data as DecodedUser;
+    req.user = decoded;
     next();
     return;
   } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
+    res.status(401);
   }
 };
