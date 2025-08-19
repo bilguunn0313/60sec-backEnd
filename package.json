@@ -1,5 +1,4 @@
 {
-  
   "name": "28-honog",
   "version": "1.0.0",
   "main": "index.js",
@@ -7,7 +6,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts"
   },
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -38,5 +36,4 @@
     "typescript": "^5.9.2"
   },
   "description": ""
-  
 }
