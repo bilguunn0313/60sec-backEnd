@@ -30,7 +30,7 @@ model Profile {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   readings    Reading[]
-  exercises   Exercise[]
+  wrongWords   WrongWord[]
 }
 
 model Subscription {
@@ -65,14 +65,14 @@ model Reading {
   audio     String?
 }
 
-model Exercise {
+model WrongWord {
   id            Int       @id @default(autoincrement())
-  words         String[]
-  startTime     DateTime?
-  endTIme       DateTime?
+  words         String
   profileId     Int
   profile       Profile   @relation(fields: [profileId], references: [id])
+  isCorrect     Boolean
   correctAnswer String
+  createdAt     DateTime  @default(now())
 }
 
 enum PlanInterval {
