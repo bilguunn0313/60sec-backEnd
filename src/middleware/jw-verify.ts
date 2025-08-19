@@ -2,9 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 type DecodedUser = {
-  id: string;
-  email: string;
-  role: string;
+  exp: number; // Token expiration
+  data: {
+    userId: number; // User ID as number
+    email: string; // User email
+  };
+  iat: number; // Token issued at
 };
 
 export type GetUserAuthInfoRequest = Request & {
@@ -20,23 +23,19 @@ export const authenticateToken = (
 
   const token = authHeader && authHeader.split(" ")[1];
 
-  console.log(token);
+  console.log("Token:", token);
 
   if (token == null) {
-    res.sendStatus(401);
-    return;
+    return res.status(401).json({ message: "Access token required" });
   }
 
   try {
-    const decoded = verify(
-      token,
-      process.env.SECRET!
-    ) as DecodedUser;
+    const decoded = verify(token, process.env.SECRET!) as DecodedUser;
 
     req.user = decoded;
     next();
-    return;
   } catch (error) {
-    res.status(401);
+    console.error("Token verification error:", error);
+    return res.status(403).json({ message: "Invalid or expired token" });
   }
 };

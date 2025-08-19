@@ -7,8 +7,11 @@ import { getReadingCount } from "../controller/Gemini/get-reading-count.controll
 const geminiRouter = express.Router();
 
 geminiRouter.post("/:profileId", getWords);
+
 geminiRouter.put("/finish/:readingId", finishReading);
+
 geminiRouter.post("/check-words", checkWords);
+
 geminiRouter.get("/stats/:profileId", getReadingCount);
 
 export default geminiRouter;
