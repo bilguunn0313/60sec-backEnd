@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prisma } from "../../utils/prisma";
 
-export const getWords = async (req: Request, res: Response) => {
+export const getSentence = async (req: Request, res: Response) => {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   let sentence = "";
   const { profileId } = req.params;
