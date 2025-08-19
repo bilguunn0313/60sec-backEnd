@@ -9,8 +9,11 @@ import { currentUser } from "../controller/profile/get-profile-current-user.cont
 const profileRouter = express.Router();
 
 profileRouter.post("/create/:userId", createProfile);
-profileRouter.get("/:user", getUserProfile);
+
+profileRouter.get("/get/:user", getUserProfile);
+
 profileRouter.get("/update", updateProfile);
+
 profileRouter.get("/current-user", authenticateToken, currentUser);
 
 export default profileRouter;
