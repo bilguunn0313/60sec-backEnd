@@ -1,8 +1,9 @@
 import express from "express";
-import { getReadingCount } from "../controller/gemini/get-reading-count.controller";
-import { checkWords } from "../controller/gemini/post-check-word.controller";
-import { finishReading } from "../controller/gemini/finish-reading.controller";
-import { getWords } from "../controller/gemini/get-generate-word.controller";
+import { getWords } from "../controller/Gemini/get-generate-word.controller";
+import { finishReading } from "../controller/Gemini/finish-reading.controller";
+import { checkWords } from "../controller/Gemini/post-check-word.controller";
+import { getReadingCount } from "../controller/Gemini/get-reading-count.controller";
+
 
 const geminiRouter = express.Router();
 
