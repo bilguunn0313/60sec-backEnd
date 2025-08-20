@@ -18,7 +18,16 @@ export const getSentence = async (req: Request, res: Response) => {
 Зөвхөн өгүүлбэр бичнэ үү, тайлбар бичихгүй.
 `;
 
-    const result = await model.generateContent(prompt);
+    const generationConfig = {
+      temperature: 0.8,
+      topK: 40,
+      topP: 0.95,
+    };
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig,
+    });
     const response = await result.response;
     sentence = response.text().trim();
 
