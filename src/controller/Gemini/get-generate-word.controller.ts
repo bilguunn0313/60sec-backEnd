@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prisma } from "../../utils/prisma";
 
-export const getWords = async (req: Request, res: Response) => {
+export const getSentence = async (req: Request, res: Response) => {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   let sentence = "";
   const { profileId } = req.params;
@@ -13,12 +13,21 @@ export const getWords = async (req: Request, res: Response) => {
     });
 
     const prompt = `
-1-2-р ангийн хүүхдэд зориулсан монгол хэл дээрх 40 үгтэй энгийн, ойлгомжтой өгүүлбэр бичнэ үү.
-Бичсэн өгүүлбэр нь хүүхдэд ойлгомжтой, энгийн үгнүүдээс бүрдэх ба 40 үгтэй байна.
+1-2-р ангийн хүүхдэд зориулсан монгол хэл дээрх 20 үгтэй энгийн, ойлгомжтой өгүүлбэр бичнэ үү.
+Бичсэн өгүүлбэр нь хүүхдэд уншихад амархан, энгийн үгнүүдээс бүрдэх ба 20 үгтэй бүгд жижиг байна.
 Зөвхөн өгүүлбэр бичнэ үү, тайлбар бичихгүй.
 `;
 
-    const result = await model.generateContent(prompt);
+    const generationConfig = {
+      temperature: 0.8,
+      topK: 40,
+      topP: 0.95,
+    };
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig,
+    });
     const response = await result.response;
     sentence = response.text().trim();
 
@@ -29,14 +38,12 @@ export const getWords = async (req: Request, res: Response) => {
         profile: {
           connect: { id: Number(profileId) },
         },
-        startTime: new Date(),
       },
     });
 
     res.json({
       sentence,
       readingId: reading.id,
-      startTime: reading.startTime,
     });
   } catch (err) {
     console.error("AI генераци алдаа:", err);

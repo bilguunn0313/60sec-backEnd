@@ -10,6 +10,7 @@ import dotenv from "dotenv";
 import SubscriptionRouter from "./router/subscription.router";
 import PlanRouter from "./router/plan.router";
 import { startExpireCron } from "./corn/expireSubscriptions";
+import wrongWordRouter from "./router/wrongWord.router";
 dotenv.config();
 
 const app = express();
@@ -29,6 +30,10 @@ app.use("/profile", profileRouter);
 app.use("/speech", speechRouter);
 app.use("/subscriptions", SubscriptionRouter);
 app.use("/plan", PlanRouter);
+
+
+app.use("/wrong", wrongWordRouter);
+
 
 startExpireCron();
 app.listen(PORT, () => {
