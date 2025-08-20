@@ -3,24 +3,23 @@ import { prisma } from "../../utils/prisma";
 
 export const updateProfile = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const { id } = req.params; // profile id
+    console.log("req.params:", req.params);
 
-    const { about, avatarImage, phone, location, birthDate } = req.body;
+    const { phone, location, birthDate } = req.body;
 
     const updatedProfile = await prisma.profile.update({
-      where: { id: Number(userId) },
+      where: { id: Number(id) },
       data: {
-        // about,
-        // avatarImage,
-        phone: phone,
+        phone: phone || undefined,
         location,
-        birthDate: new Date(birthDate),
+        birthDate: birthDate ? new Date(birthDate) : null,
       },
     });
 
     res.status(200).json(updatedProfile);
   } catch (error) {
-    console.error("Profile update error:", error);
+    console.error("❌ Profile update error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

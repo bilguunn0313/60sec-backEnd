@@ -16,4 +16,6 @@ profileRouter.get("/update", updateProfile);
 
 profileRouter.get("/current-user", authenticateToken, currentUser);
 
+profileRouter.put("/:id", updateProfile);
+
 export default profileRouter;
