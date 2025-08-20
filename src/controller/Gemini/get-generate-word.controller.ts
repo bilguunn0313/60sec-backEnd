@@ -19,7 +19,7 @@ export const getSentence = async (req: Request, res: Response) => {
 `;
 
     const generationConfig = {
-      temperature: 0.8,
+      temperature: 1.0,
       topK: 40,
       topP: 0.95,
     };

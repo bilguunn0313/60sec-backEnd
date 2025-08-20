@@ -48,7 +48,7 @@ export const getWords = async (req: Request, res: Response) => {
       data: {
         words: word,
         isCorrect: false,
-        correctAnswer: json.correctWord,
+        correctAnswer: json.wrongWord,
         profile: {
           connect: { id: Number(profileId) },
         },
