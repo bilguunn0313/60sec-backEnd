@@ -9,6 +9,8 @@ export const createUser = async (req: Request, res: Response) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
+    console.log("Checking username:", username);
+
     const checkUserName = await prisma.user.findUnique({
       where: {
         username,

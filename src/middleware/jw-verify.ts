@@ -1,11 +1,13 @@
-import { JwtPayload, verify } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-import "dotenv/config";
+import { verify } from "jsonwebtoken";
 
 type DecodedUser = {
-  userId: number;
-  email: string;
-  username: string;
+  exp: number; // Token expiration
+  data: {
+    userId: number; // User ID as number
+    email: string; // User email
+  };
+  iat: number; // Token issued at
 };
 
 export type GetUserAuthInfoRequest = Request & {
@@ -18,23 +20,22 @@ export const authenticateToken = (
   next: NextFunction
 ) => {
   const authHeader = req.headers["authorization"] as string;
+
   const token = authHeader && authHeader.split(" ")[1];
 
+  console.log("Token:", token);
+
   if (token == null) {
-    res.sendStatus(401);
-    return;
+    return res.status(401).json({ message: "Access token required" });
   }
 
   try {
-    const secret = process.env.SECRET!;
-    const decoded = verify(token, secret) as JwtPayload;
+    const decoded = verify(token, process.env.SECRET!) as DecodedUser;
 
-    console.log("decoded decoded:::", decoded.data);
-
-    req.user = decoded.data as DecodedUser;
+    req.user = decoded;
     next();
-    return;
   } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
+    console.error("Token verification error:", error);
+    return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
