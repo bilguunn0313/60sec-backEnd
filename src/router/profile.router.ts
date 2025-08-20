@@ -2,9 +2,10 @@ import express from "express";
 import { createProfile } from "../controller/profile/create-profile.controller";
 
 import { getUserProfile } from "../controller/profile/get-profile-by-user.controller";
-import { updateProfile } from "../controller/profile/update-profile.controller";
+// import { updateProfile } from "../controller/profile/update-profile.controller";
 import { authenticateToken } from "../middleware/jw-verify";
 import { currentUser } from "../controller/profile/get-profile-current-user.controller";
+import { updateProfile } from "../controller/profile/update-input-profile.controller";
 
 const profileRouter = express.Router();
 
@@ -12,10 +13,10 @@ profileRouter.post("/create/:userId", createProfile);
 
 profileRouter.get("/get/:user", getUserProfile);
 
-profileRouter.get("/update", updateProfile);
+// profileRouter.get("/update", updateProfile);
 
 profileRouter.get("/current-user", authenticateToken, currentUser);
 
-profileRouter.put("/:id", updateProfile);
+profileRouter.put("/update/:userId", updateProfile);
 
 export default profileRouter;

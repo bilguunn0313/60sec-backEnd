@@ -28,7 +28,7 @@ model Profile {
   avatarImage String?
   userId      Int        @unique
   user        User       @relation(fields: [userId], references: [id])
-   phone       String?    // 📞 Утас
+  phone       String?    // 📞 Утас
   location    String?    // 📍 Байршил
   birthDate   DateTime?  // 🎂 Төрсөн өдөр
   createdAt   DateTime   @default(now())
