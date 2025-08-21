@@ -8,6 +8,7 @@ generator client {
 }
 
 model User {
+
   id            Int            @id @default(autoincrement())
   email         String         @unique
   username      String         @unique
@@ -27,6 +28,9 @@ model Profile {
   avatarImage String?
   userId      Int        @unique
   user        User       @relation(fields: [userId], references: [id])
+  phone       String?    // 📞 Утас
+  location    String?    // 📍 Байршил
+  birthDate   DateTime?  // 🎂 Төрсөн өдөр
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   readings    Reading[]

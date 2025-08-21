@@ -21,16 +21,17 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use("/users", userRouter);
+app.use("/auth", userRouter);
+
 app.use("/gemini", geminiRouter);
 
 app.use("/profile", profileRouter);
 
 app.use("/speech", speechRouter);
-app.use("/subscriptions", SubscriptionRouter);
-app.use("/plan", PlanRouter);
-app.use("/wrong", wrongWordRouter);
 
+app.use("/subscriptions", SubscriptionRouter);
+
+app.use("/plan", PlanRouter);
 startExpireCron();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
