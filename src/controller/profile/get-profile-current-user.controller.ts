@@ -1,27 +1,49 @@
-import { Response, Request } from "express";
-import { GetUserAuthInfoRequest } from "../../middleware/jw-verify";
+// controller/profile/get-profile-current-user.controller.ts
+import { Response } from "express";
 import { prisma } from "../../utils/prisma";
+import { GetUserAuthInfoRequest } from "../../middleware/jw-verify";
 
-export const getCurrentProfile = async (req: GetUserAuthInfoRequest, res: Response) => {
-  
+export const currentUser = async (
+  req: GetUserAuthInfoRequest,
+  res: Response
+) => {
+  const user = req.user;
+  console.log(user);
+  // Check if user exists from middleware
+
+  // Now checks for the nested structure
+  if (!user || !user.data || !user.data.userId) {
+    return res.status(401).json({
+      message: "Unauthorized: User not authenticated",
+    });
+  }
+
   try {
-    const headerUser = req.user;
-    
-    if(!headerUser){
-      res.status(400).json({message:"Error"});
-      return;
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { id: headerUser?.userId },
+    const foundedUser = await prisma.user.findFirst({
+      where: { id: Number(user.data.userId) },
+      select: {
+        id: true,
+        email: true,
+        // role: true,
+        // Add other fields you want to return, exclude sensitive data like password
+        // createdAt: true,
+        // updatedAt: true,
+      },
     });
 
-    if (!user) {
-      res.status(400).json({ message: "No user info in request" });
+    if (!foundedUser) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ user });
+    return res.status(200).json({
+      success: true,
+      user: foundedUser,
+    });
   } catch (error) {
-    res.status(500).json({ error });
+    console.error("Database error:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      error: process.env.NODE_ENV === "development" ? error : undefined,
+    });
   }
 };

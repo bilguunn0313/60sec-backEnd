@@ -32,12 +32,6 @@ app.use("/speech", speechRouter);
 app.use("/subscriptions", SubscriptionRouter);
 
 app.use("/plan", PlanRouter);
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d6838d (a)
-app.use("/wrong", wrongWordRouter);
-
 startExpireCron();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

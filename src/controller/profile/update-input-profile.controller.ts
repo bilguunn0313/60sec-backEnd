@@ -5,7 +5,11 @@ export const updateProfile = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
+<<<<<<< HEAD
+    const { phone, location, birthDate } = req.body;
+=======
     const { about, avatarImage, phone, location, birthDate } = req.body;
+>>>>>>> 5e81402 (input)
 
     const updatedProfile = await prisma.profile.update({
       where: { id: Number(userId) },

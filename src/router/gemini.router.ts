@@ -11,7 +11,9 @@ geminiRouter.get("/", getWords);
 
 geminiRouter.post("/:profileId", getSentence);
 geminiRouter.put("/finish/:readingId", finishReading);
+
 geminiRouter.post("/check-words", checkWords);
+
 geminiRouter.get("/stats/:profileId", getReadingCount);
 
 export default geminiRouter;
