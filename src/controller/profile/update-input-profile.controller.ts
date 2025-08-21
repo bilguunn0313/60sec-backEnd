@@ -10,8 +10,8 @@ export const updateProfile = async (req: Request, res: Response) => {
     const updatedProfile = await prisma.profile.update({
       where: { id: Number(userId) },
       data: {
-        about,
-        avatarImage,
+        // about,
+        // avatarImage,
         phone: phone,
         location,
         birthDate: new Date(birthDate),
