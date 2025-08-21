@@ -1,8 +1,8 @@
 import express from "express";
-import { getUserSubscriptions } from "../controller/Subscription/get-subscription.controller";
-import { createSubscription } from "../controller/Subscription/post-subscription.controller";
-import { cancelSubscription } from "../controller/Subscription/put-sub.controller";
-import { getAllSubscriptions } from "../controller/Subscription/getAll-subscription.controller";
+import { createSubscription } from "../controller/subscription/post-subscription.controller";
+import { getUserSubscriptions } from "../controller/subscription/get-subscription.controller";
+import { getAllSubscriptions } from "../controller/subscription/getAll-subscription.controller";
+import { cancelSubscription } from "../controller/subscription/put-sub.controller";
 
 const SubscriptionRouter = express.Router();
 
