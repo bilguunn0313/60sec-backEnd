@@ -61,6 +61,7 @@ export const getWords = async (req: Request, res: Response) => {
       wrongWordId: wrongWords.id,
       correctAnswer: json.correctWord,
       wrongWord: json.wrongWord,
+      success: true,
     });
   } catch (err) {
     console.error("AI генераци алдаа:", err);

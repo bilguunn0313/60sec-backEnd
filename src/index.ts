@@ -31,6 +31,8 @@ app.use("/speech", speechRouter);
 
 app.use("/subscriptions", SubscriptionRouter);
 
+app.use("/wrong", wrongWordRouter);
+
 app.use("/plan", PlanRouter);
 startExpireCron();
 app.listen(PORT, () => {
