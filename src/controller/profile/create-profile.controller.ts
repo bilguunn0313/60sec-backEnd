@@ -7,7 +7,7 @@ export const createProfile = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
-    if (!avatarImage || !about || !name ) {
+    if (!avatarImage || !about || !name) {
       res.status(400).json({ error: "Missing fields" });
       return;
     }
