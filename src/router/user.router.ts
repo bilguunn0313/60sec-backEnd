@@ -13,6 +13,6 @@ userRouter.get("/", getUsers);
 
 userRouter.put("/update-user/:id", UpdateUser);
 
-userRouter.post("/sign-in", signIn);
+userRouter.post("/login", signIn);
 
 export default userRouter;

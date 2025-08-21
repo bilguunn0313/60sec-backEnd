@@ -6,6 +6,8 @@ import { getReadingCount } from "../controller/Gemini/get-reading-count.controll
 
 const geminiRouter = express.Router();
 
+geminiRouter.get("/", getWords);
+
 geminiRouter.post("/:profileId", getSentence);
 geminiRouter.put("/finish/:readingId", finishReading);
 geminiRouter.post("/check-words", checkWords);

@@ -21,7 +21,8 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use("/users", userRouter);
+app.use("/auth", userRouter);
+
 app.use("/gemini", geminiRouter);
 
 app.use("/profile", profileRouter);
