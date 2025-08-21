@@ -12,7 +12,7 @@ export const currentUser = async (
   // Check if user exists from middleware
 
   // Now checks for the nested structure
-  if (!user || !user.data || !user.data.userId) {
+  if (!user || !user.id || !user.email) {
     return res.status(401).json({
       message: "Unauthorized: User not authenticated",
     });
@@ -20,10 +20,12 @@ export const currentUser = async (
 
   try {
     const foundedUser = await prisma.user.findFirst({
-      where: { id: Number(user.data.userId) },
+      where: { id: Number(user.id) },
       select: {
         id: true,
         email: true,
+        profile: true,
+        profileId: true,
         // role: true,
         // Add other fields you want to return, exclude sensitive data like password
         // createdAt: true,

@@ -3,10 +3,10 @@ import { verify } from "jsonwebtoken";
 
 type DecodedUser = {
   exp: number; // Token expiration
-  data: {
-    userId: number; // User ID as number
-    email: string; // User email
-  };
+
+  id: number; // User ID as number
+  email: string; // User email
+
   iat: number; // Token issued at
 };
 
