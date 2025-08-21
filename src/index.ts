@@ -28,8 +28,14 @@ app.use("/gemini", geminiRouter);
 app.use("/profile", profileRouter);
 
 app.use("/speech", speechRouter);
+
 app.use("/subscriptions", SubscriptionRouter);
+
 app.use("/plan", PlanRouter);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d6838d (a)
 app.use("/wrong", wrongWordRouter);
 
 startExpireCron();
