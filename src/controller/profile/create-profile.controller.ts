@@ -15,8 +15,8 @@ export const createProfile = async (req: Request, res: Response) => {
     const userProfile = await prisma.profile.create({
       data: {
         name,
-        about,
         avatarImage,
+        age: 0,
 
         userId: Number(userId),
       },

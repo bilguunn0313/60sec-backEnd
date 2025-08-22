@@ -5,7 +5,7 @@ import { getUserProfile } from "../controller/profile/get-profile-by-user.contro
 // import { updateProfile } from "../controller/profile/update-profile.controller";
 import { authenticateToken } from "../middleware/jw-verify";
 import { currentUser } from "../controller/profile/get-profile-current-user.controller";
-import { updateProfile } from "../controller/profile/update-input-profile.controller";
+import { updateProfile } from "../controller/profile/update-profile.controller";
 
 const profileRouter = express.Router();
 
