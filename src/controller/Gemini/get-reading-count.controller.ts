@@ -3,13 +3,13 @@ import { prisma } from "../../utils/prisma";
 
 export const getReadingCount = async (req: Request, res: Response) => {
   try {
-    const { profileId } = req.params;
+    const { userId } = req.params;
 
     const { startOfWeek, endOfWeek } = getStartAndEnd();
 
     const readings = await prisma.reading.findMany({
       where: {
-        profileId: Number(profileId),
+        userId: Number(userId),
         NOT: {
           endTime: null,
         },

@@ -5,13 +5,13 @@ export const updateProfile = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const { phone, location, birthDate } = req.body;
+    const { phone, location, birthDate, about, avatarImage } = req.body;
 
     const updatedProfile = await prisma.profile.update({
       where: { id: Number(userId) },
       data: {
-        // about,
-        // avatarImage,
+        about,
+        avatarImage,
         phone: phone,
         location,
         birthDate: new Date(birthDate),

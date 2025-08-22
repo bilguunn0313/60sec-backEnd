@@ -8,7 +8,6 @@ generator client {
 }
 
 model User {
-
   id            Int            @id @default(autoincrement())
   email         String         @unique
   username      String         @unique
@@ -17,24 +16,26 @@ model User {
   profile       Profile?
   profileId     Int?
   subscriptions Subscription[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  readings      Reading[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Profile {
-  id          Int        @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
   about       String?
   avatarImage String?
-  userId      Int        @unique
-  user        User       @relation(fields: [userId], references: [id])
-  phone       String?    // 📞 Утас
-  location    String?    // 📍 Байршил
-  birthDate   DateTime?  // 🎂 Төрсөн өдөр
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  readings    Reading[]
-  wrongWords   WrongWord[]
+  userId      Int       @unique
+  user        User      @relation(fields: [userId], references: [id])
+  phone       String? // 📞 Утас
+  location    String? // 📍 Байршил
+  birthDate   DateTime? // 🎂 Төрсөн өдөр
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  wrongWords WrongWord[]
 }
 
 model Subscription {
@@ -63,20 +64,20 @@ model Reading {
   sentences String
   startTime DateTime?
   endTime   DateTime?
-  profileId Int
-  profile   Profile   @relation(fields: [profileId], references: [id])
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
   accuracy  String
   audio     String?
 }
 
 model WrongWord {
-  id            Int       @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   words         String
   profileId     Int
-  profile       Profile   @relation(fields: [profileId], references: [id])
+  profile       Profile  @relation(fields: [profileId], references: [id])
   isCorrect     Boolean
   correctAnswer String
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime @default(now())
 }
 
 enum PlanInterval {
