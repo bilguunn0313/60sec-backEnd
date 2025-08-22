@@ -5,7 +5,7 @@ import { prisma } from "../../utils/prisma";
 export const getSentence = async (req: Request, res: Response) => {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   let sentence = "";
-  const { userId } = req.params;
+  const { profileId } = req.params;
 
   try {
     const model = await genAI.getGenerativeModel({
@@ -36,7 +36,7 @@ export const getSentence = async (req: Request, res: Response) => {
         sentences: sentence,
         accuracy: "",
         profile: {
-          connect: { id: Number(userId) },
+          connect: { id: Number(profileId) },
         },
       },
     });
