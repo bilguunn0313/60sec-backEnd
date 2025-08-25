@@ -2,7 +2,7 @@ import { Response, Request } from "express";
 import { prisma } from "../../utils/prisma";
 
 export const createProfile = async (req: Request, res: Response) => {
-  const { name, about, avatarImage } = req.body;
+  const { name, about, avatarImage, phone, location } = req.body;
 
   const { userId } = req.params;
 

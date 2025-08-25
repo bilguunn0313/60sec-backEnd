@@ -1,4 +1,4 @@
-// controller/profile/get-profile-current-user.controller.ts
+
 import { Response } from "express";
 import { prisma } from "../../utils/prisma";
 import { GetUserAuthInfoRequest } from "../../middleware/jw-verify";
