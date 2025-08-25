@@ -13,14 +13,14 @@ export const updateProfile = async (
   }
 
   try {
-    const { name, avatarImage, age } = req.body;
+    const { username, avatarImage, age } = req.body;
 
     const updatedProfile = await prisma.profile.update({
       where: { userId: Number(user.id) },
       data: {
-        name,
+        username,
         avatarImage,
-        age: age ?? 0, // age өгөгдөөгүй бол 0 гэж default
+        age
       },
     });
 

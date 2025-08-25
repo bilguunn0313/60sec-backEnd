@@ -37,9 +37,9 @@ export const createUser = async (req: Request, res: Response) => {
 
       const secret = process.env.SECRET!;
 
-      const hour = Math.floor(Date.now() / 1000) + 60 * 60;
+      const sixHour = Math.floor(Date.now() / 1000) *6 * 60 * 60;
 
-      const accessToken = jwt.sign({ exp: hour, data }, secret as string);
+      const accessToken = jwt.sign({ exp: sixHour, data }, secret);
 
       return res.status(200).json({ success: true, accessToken });
     } else {

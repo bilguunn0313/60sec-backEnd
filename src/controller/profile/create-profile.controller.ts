@@ -2,21 +2,21 @@ import { Response, Request } from "express";
 import { prisma } from "../../utils/prisma";
 
 export const createProfile = async (req: Request, res: Response) => {
-  const { name, about, avatarImage, phone, location } = req.body;
+  const { username, avatarImage, age } = req.body;
 
   const { userId } = req.params;
 
   try {
-    if (!avatarImage || !about || !name) {
+    if (!age || !username) {
       res.status(400).json({ error: "Missing fields" });
       return;
     }
 
     const userProfile = await prisma.profile.create({
       data: {
-        name,
-        avatarImage,
-        age: 0,
+        username: username,
+        avatarImage: avatarImage,
+        age,
 
         userId: Number(userId),
       },

@@ -13,9 +13,9 @@ profileRouter.post("/create/:userId", createProfile);
 
 profileRouter.get("/get/:user", getUserProfile);
 
-profileRouter.get("/update:userId", updateProfile);
+profileRouter.put("/update:userId", updateProfile);
 
-profileRouter.get("/current-user",  currentUser);
+profileRouter.get("/current-user", authenticateToken, currentUser);
 
 
 export default profileRouter;
