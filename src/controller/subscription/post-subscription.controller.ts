@@ -7,7 +7,7 @@ function calculateEndDate(startDate: Date, interval: string): Date {
 
   switch (interval) {
     case "FREE":
-      endDate.setHours(endDate.getHours() + 168);
+      endDate.setHours(endDate.getHours() + 168); // 7 өдөр
       break;
     case "MONTHLY":
       endDate.setMonth(endDate.getMonth() + 1);
@@ -39,10 +39,14 @@ export const createSubscription = async (req: Request, res: Response) => {
     // Хэрэглэгчийн идэвхтэй subscription шалгах
     const activeSub = await prisma.subscription.findFirst({
       where: { userId, status: "ACTIVE" },
+      include: { plan: true }, // хэрэгтэй мэдээллийг буцааж болно
     });
 
     if (activeSub) {
-      return res.status(400).json({ message: "User already has an active subscription" });
+      return res.status(200).json({
+        message: "User already has an active subscription",
+        activeSubscription: activeSub,
+      });
     }
 
     const plan = await prisma.plan.findUnique({
@@ -70,6 +74,6 @@ export const createSubscription = async (req: Request, res: Response) => {
     return res.status(201).json(subscription);
   } catch (error) {
     console.error("Subscription creation error:", error);
-    return res.status(500).json({ message: "Subscription creation failed" });
+    return res.status(500).json({ message: "Subscription creation failed", error: error instanceof Error ? error.message : error });
   }
 };
