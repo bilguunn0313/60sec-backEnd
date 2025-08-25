@@ -5,7 +5,8 @@ import { getUserProfile } from "../controller/profile/get-profile-by-user.contro
 // import { updateProfile } from "../controller/profile/update-profile.controller";
 import { authenticateToken } from "../middleware/jw-verify";
 import { currentUser } from "../controller/profile/get-profile-current-user.controller";
-import { updateProfile } from "../controller/profile/update-input-profile.controller";
+import { updateProfile } from "../controller/profile/update-profile.controller";
+
 
 const profileRouter = express.Router();
 
@@ -13,10 +14,9 @@ profileRouter.post("/create/:userId", createProfile);
 
 profileRouter.get("/get/:user", getUserProfile);
 
-// profileRouter.get("/update", updateProfile);
+profileRouter.get("/update:userId", updateProfile);
 
-profileRouter.get("/current-user", authenticateToken, currentUser);
+profileRouter.get("/current-user",  currentUser);
 
-profileRouter.put("/update/:userId", updateProfile);
 
 export default profileRouter;
