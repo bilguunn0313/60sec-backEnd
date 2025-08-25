@@ -20,7 +20,7 @@ export const updateProfile = async (
       data: {
         name,
         avatarImage,
-        age: age ?? 0, 
+        age: age ?? 0, // age өгөгдөөгүй бол 0 гэж default
       },
     });
 
