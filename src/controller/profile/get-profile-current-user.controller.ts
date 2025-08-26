@@ -17,6 +17,7 @@ export const currentUser = async (req: GetUserAuthInfoRequest, res: Response) =>
         id: true,
         email: true,
         username:true,
+        profileId:true,
         profile: true,  // avatarImage, age, name
       },
     });

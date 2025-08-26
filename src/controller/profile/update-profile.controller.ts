@@ -6,28 +6,28 @@ export const updateProfile = async (
   req: GetUserAuthInfoRequest,
   res: Response
 ) => {
-  const user = req.user;
+  const { userId } = req.params;
 
-  if (!user || !user.id) {
-    return res.status(401).json({ message: "Unauthorized" });
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
   }
 
   try {
     const { username, avatarImage, age } = req.body;
 
     const updatedProfile = await prisma.profile.update({
-      where: { userId: Number(user.id) },
+      where: { userId: Number(userId) },
       data: {
         username,
         avatarImage,
-        age
+        age,
       },
     });
 
-    // Хэрэглэгчийн context-д хэрэгтэй бол user object-д profile update хийнэ
     return res.status(200).json({ success: true, profile: updatedProfile });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to update profile" });
   }
 };
+

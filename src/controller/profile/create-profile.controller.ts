@@ -3,21 +3,23 @@ import { prisma } from "../../utils/prisma";
 
 export const createProfile = async (req: Request, res: Response) => {
   const { username, avatarImage, age } = req.body;
-
   const { userId } = req.params;
 
   try {
-    if (!age || !username) {
-      res.status(400).json({ error: "Missing fields" });
-      return;
+    // 🧠 Утга шалгах
+    if (username === undefined || username === null || username.trim() === "") {
+      return res.status(400).json({ error: "Username is required" });
+    }
+
+    if (age === undefined || age === null || isNaN(Number(age))) {
+      return res.status(400).json({ error: "Age is required and must be a number" });
     }
 
     const userProfile = await prisma.profile.create({
       data: {
-        username: username,
-        avatarImage: avatarImage,
-        age,
-
+        username,
+        avatarImage,
+        age: Number(age),
         userId: Number(userId),
       },
     });

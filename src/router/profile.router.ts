@@ -13,7 +13,7 @@ profileRouter.post("/create/:userId", createProfile);
 
 profileRouter.get("/get/:user", getUserProfile);
 
-profileRouter.put("/update:userId", updateProfile);
+profileRouter.put("/update/:userId", updateProfile);
 
 profileRouter.get("/current-user", authenticateToken, currentUser);
 
