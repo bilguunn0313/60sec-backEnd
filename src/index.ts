@@ -11,6 +11,7 @@ import SubscriptionRouter from "./router/subscription.router";
 import PlanRouter from "./router/plan.router";
 import { startExpireCron } from "./corn/expireSubscriptions";
 import wrongWordRouter from "./router/wrongWord.router";
+import leaderboardRouter from "./router/leaderboard.router";
 dotenv.config();
 
 const app = express();
@@ -34,6 +35,8 @@ app.use("/subscriptions", SubscriptionRouter);
 app.use("/wrong", wrongWordRouter);
 
 app.use("/plan", PlanRouter);
+
+app.use("/leaderboard", leaderboardRouter);
 startExpireCron();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

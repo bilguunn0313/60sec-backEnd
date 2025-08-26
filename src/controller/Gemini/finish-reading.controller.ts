@@ -14,9 +14,24 @@ export const finishReading = async (req: Request, res: Response) => {
         startTime,
         endTime: stopTime,
       },
+      include: {
+        profile: true,
+      },
     });
 
-    res.json({ updated });
+    let scoreValue = 0;
+    if (accuracy >= 20) scoreValue = 5;
+    if (accuracy >= 50) scoreValue = 10;
+    if (accuracy >= 70) scoreValue = 15;
+
+    const score = await prisma.score.create({
+      data: {
+        profileId: updated.profileId,
+        score: scoreValue,
+      },
+    });
+
+    res.json({ updated, score });
   } catch (err) {
     console.error("Reading дуусгах алдаа:", err);
     res.status(500).json({ message: "Reading дуусгах үед алдаа гарлаа" });
