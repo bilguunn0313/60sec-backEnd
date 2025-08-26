@@ -22,16 +22,25 @@ model User {
 
 model Profile {
   id          Int         @id @default(autoincrement())
-  username        String
+  username    String
   avatarImage String?
-  age         Int      @default(0) 
-  userId      Int        @unique
-  user        User       @relation(fields: [userId], references: [id])   
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
+  age         Int         @default(0)
+  userId      Int         @unique
+  user        User        @relation(fields: [userId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  score       Score[]
   readings    Reading[]
   wrongWords  WrongWord[]
+}
+
+model Score {
+  id        Int      @id @default(autoincrement())
+  profileId Int
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  score     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Subscription {
