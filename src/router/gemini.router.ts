@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getWords } from "../controller/Gemini/get-generate-word.controller";
+import { getWords } from "../controller/wrongWords/get-words.controller";
 
 import { getSentence } from "../controller/Gemini/get-generate-word.controller";
 
