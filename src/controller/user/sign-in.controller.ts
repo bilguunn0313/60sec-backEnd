@@ -9,6 +9,9 @@ export const signIn = async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: { email },
+      include: {
+        profile: true,
+      },
     });
 
     if (!user) {
