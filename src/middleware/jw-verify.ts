@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 type DecodedUser = {
-  exp: number; // Token expiration
+  exp: number;
 
-  id: number; // User ID as number
-  email: string; // User email
+  id: number;
+  email: string;
 
-  iat: number; // Token issued at
+  iat: number;
 };
 
 export type GetUserAuthInfoRequest = Request & {

@@ -1,9 +1,11 @@
-
 import { Response } from "express";
 import { prisma } from "../../utils/prisma";
 import { GetUserAuthInfoRequest } from "../../middleware/jw-verify";
 
-export const currentUser = async (req: GetUserAuthInfoRequest, res: Response) => {
+export const currentUser = async (
+  req: GetUserAuthInfoRequest,
+  res: Response
+) => {
   const user = req.user;
 
   if (!user || !user.id) {
@@ -16,9 +18,9 @@ export const currentUser = async (req: GetUserAuthInfoRequest, res: Response) =>
       select: {
         id: true,
         email: true,
-        username:true,
-        profileId:true,
-        profile: true,  // avatarImage, age, name
+        username: true,
+        profileId: true,
+        profile: true,
       },
     });
 

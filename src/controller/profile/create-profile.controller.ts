@@ -6,13 +6,14 @@ export const createProfile = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
-    // 🧠 Утга шалгах
     if (username === undefined || username === null || username.trim() === "") {
       return res.status(400).json({ error: "Username is required" });
     }
 
     if (age === undefined || age === null || isNaN(Number(age))) {
-      return res.status(400).json({ error: "Age is required and must be a number" });
+      return res
+        .status(400)
+        .json({ error: "Age is required and must be a number" });
     }
 
     const userProfile = await prisma.profile.create({
