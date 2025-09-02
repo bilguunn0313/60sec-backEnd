@@ -14,10 +14,11 @@ import wrongWordRouter from "./router/wrongWord.router";
 import leaderboardRouter from "./router/leaderboard.router";
 dotenv.config();
 
+const corsOptions = {
+  origin: process.env.CLIENT_URL || "http://localhost:3000", // Frontend URL
+};
 const app = express();
-app.use(cors());
-
-app.options("*", cors());
+app.use(cors(corsOptions));
 
 const PORT = 4001;
 
