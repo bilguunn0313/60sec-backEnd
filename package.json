@@ -39,5 +39,8 @@
     "tsx": "^4.20.3",
     "typescript": "^5.9.2"
   },
-  "description": ""
+  "description": "",
+  "engines": {
+    "node": "20.x"
+  }
 }
