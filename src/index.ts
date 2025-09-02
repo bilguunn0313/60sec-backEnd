@@ -15,12 +15,28 @@ import leaderboardRouter from "./router/leaderboard.router";
 dotenv.config();
 
 const app = express();
+app.use(cors());
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://final-project-self-three.vercel.app/",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 const PORT = 4001;
 
 app.use(express.json());
-
-app.use(cors());
 
 app.use("/auth", userRouter);
 
