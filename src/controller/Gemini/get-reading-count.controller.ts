@@ -35,16 +35,20 @@ export const getReadingCount = async (req: Request, res: Response) => {
       return sum;
     }, 0);
 
-    const totalDurationMinutes = totalDurationMs / 1000 / 60;
+    const totalDurationMinutes = Math.floor(totalDurationMs / 1000);
 
-    const averageAccuracy = (
-      readings.reduce((acc, curr) => acc + Number(curr.accuracy), 0) /
-      readings.length
-    ).toFixed(2);
+    //accuracy
+    const averageAccuracy =
+      readings.length > 0
+        ? (
+            readings.reduce((acc, curr) => acc + Number(curr.accuracy), 0) /
+            readings.length
+          ).toFixed(2)
+        : "0.00";
 
     res.json({
       count: readings?.length,
-      averageDuration: totalDurationMinutes.toFixed(2),
+      averageDuration: totalDurationMinutes,
       averageAccuracy,
     });
   } catch (err) {
