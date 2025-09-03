@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
 import userRouter from "./router/user.router";
 import geminiRouter from "./router/gemini.router";
@@ -12,11 +12,13 @@ import PlanRouter from "./router/plan.router";
 import { startExpireCron } from "./corn/expireSubscriptions";
 import wrongWordRouter from "./router/wrongWord.router";
 import leaderboardRouter from "./router/leaderboard.router";
+
 dotenv.config();
 
 const corsOptions = {
   origin: process.env.CLIENT_URL || "http://localhost:3000", // Frontend URL
 };
+
 const app = express();
 app.use(cors(corsOptions));
 
